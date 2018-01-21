@@ -1,4 +1,9 @@
 class ViewComponent {
+    constructor() {
+        if (new.target === ViewComponent)       //ES6 only
+            throw new Erro("abstract class");
+    }
+
     getElement() {
         return this._element;
     }
@@ -25,12 +30,46 @@ class GameCell extends ViewComponent {
 
 }
 
+class GameBoard extends GameCell {
+    constructor() {
+        super();
+
+        const cellsInLine = 10;
+        const cellsInColumn = 10;
+
+        const gameElement = document.getElementById('game');
+        const table = document.createElement('table');
+
+        let row = document.createElement('tr');
 
 
-const gameElement = document.getElementById('game');
-const row = document.createElement('tr');
-gameElement.appendChild(row);
+        for (let i = 0; i < cellsInLine; i++) {
+            row = document.createElement('tr');
+            for (let jj = 0; jj < cellsInColumn; jj++) {
+                const cell = new GameCell;
+                row.appendChild(cell.getElement());
+            }
+            table.appendChild(row);
+        }
 
-const cell1 = new GameCell;
+        // for (let i = 1; i <= cellsInLine * cellsInColumn; i++) {
+        //     const cell = new GameCell;
+        //     row.appendChild(cell.getElement());
+        //     if (i % cellsInLine === 0) {
+        //         table.appendChild(row);
+        //         row = document.createElement('tr');     // clear?
+        //     }
+        // }
 
-row.appendChild(cell1.getElement());
+        console.log(table);
+
+        gameElement.appendChild(table);
+        // this._element;
+        // this.getElement();
+
+    }
+}
+
+
+const gameBoard = new GameBoard;
+// gameBoard;
