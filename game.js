@@ -1,12 +1,17 @@
-class GameCell {
+class ViewComponent {
+    getElement() {
+        return this._element;
+    }
+}
+
+class GameCell extends ViewComponent {
     constructor() {
+        super();        //"wywołanie konstruktora klasy parent"
         this._state = 'unknown';        // 'podkreślnik' = info dla programisty że to private;
         this._element = document.createElement('td');
         const self = this;
         this._element.addEventListener('click', () => {
             self.setState('miss');      // na funkcji strzałkowej działa z this.
-            console.log(this);
-
         })
     }
 
@@ -18,9 +23,6 @@ class GameCell {
         this._element.className = "cell_" + state;
     }
 
-    getElement() {
-        return this._element;
-    }
 }
 
 
